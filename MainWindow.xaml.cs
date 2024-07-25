@@ -14,6 +14,7 @@ namespace WpfApp1
         private double ellipseCenterY = 200; // Center of Canvas (Height / 2)
         private double buttonWidth = 50;
         private double buttonHeight = 25;
+        private double scaleFactor = 3;
 
         private const int NumButtons = 8;
         private Button[] buttons = new Button[NumButtons];
@@ -62,7 +63,7 @@ namespace WpfApp1
             double y = ellipseCenterY + radiusY * Math.Sin(angle * Math.PI / 180);
 
             double scale = CalculateScale(y);
-            button.RenderTransform = new ScaleTransform(scale, scale, buttonWidth / 2, buttonHeight / 2);
+            button.RenderTransform = new ScaleTransform(scale, scale, buttonWidth / scaleFactor, buttonHeight / scaleFactor);
 
             Canvas.SetLeft(button, x - buttonWidth / 2 * scale);
             Canvas.SetTop(button, y - buttonHeight / 2 * scale);
