@@ -3,19 +3,67 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Canvas x:Name="mainCanvas">
-            <Button x:Name="button1" Content="Button 1" Width="50" Height="25"/>
-            <Button x:Name="button2" Content="Button 2" Width="50" Height="25"/>
-            <Button x:Name="button3" Content="Button 3" Width="50" Height="25"/>
-            <Button x:Name="button4" Content="Button 4" Width="50" Height="25"/>
-            <Button x:Name="button5" Content="Button 5" Width="50" Height="25"/>
-            <Button x:Name="button6" Content="Button 6" Width="50" Height="25"/>
-            <Button x:Name="button7" Content="Button 7" Width="50" Height="25"/>
-            <Button x:Name="button8" Content="Button 8" Width="50" Height="25"/>
+            <Button x:Name="button1" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="Abacus"/>
+                </Grid>
+            </Button>
+            <Button x:Name="button2" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                        <icons:PackIconMaterial 
+                        Kind="TableAccount"/>
+                    </Grid>
+                </Button>
+            <Button x:Name="button3" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="Kangaroo"/>
+                </Grid>
+            </Button>
+            <Button x:Name="button4" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="BabyBuggy"/>
+                </Grid>
+            </Button>
+            <Button x:Name="button5" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="CabinAFrame"/>
+                </Grid>
+            </Button>
+            <Button x:Name="button6" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="DanceBallroom"/>
+                </Grid>
+            </Button>
+            <Button x:Name="button7" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="FaceAgent"/>
+                </Grid>
+            </Button>
+            <Button x:Name="button8" Width="50" Height="25">
+                <Grid 
+                    ClipToBounds="True">
+                    <icons:PackIconMaterial 
+                        Kind="Hail"/>
+                </Grid>
+            </Button>
         </Canvas>
     </Grid>
 </Window>
