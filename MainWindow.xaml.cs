@@ -80,9 +80,11 @@ namespace WpfApp1
             double y = ellipseCenterY + radiusY * Math.Sin(angle * Math.PI / 180);
 
             double scale = CalculateScale(y);
+            double opacity = CalculateOpacity(y);
 
             button.Width = buttonWidth * scale;
             button.Height = buttonHeight * scale;
+            button.Opacity = opacity;
 
             // Set scale and corner radius
             CarouselProperties.SetScaleFactor(button, scale);
@@ -90,6 +92,14 @@ namespace WpfApp1
 
             Canvas.SetLeft(button, x - button.Width / 2);
             Canvas.SetTop(button, y - button.Height / 2);
+        }
+
+        private double CalculateOpacity(double y)
+        {
+            double minY = ellipseCenterY - ellipseHeight / 2;
+            double maxY = ellipseCenterY + ellipseHeight / 2;
+            double normalizedY = (y - minY) / (maxY - minY);
+            return 0.6 + normalizedY * 0.4; // Opacity from 0.6 to 1.0
         }
 
         private double CalculateScale(double y)
@@ -157,9 +167,11 @@ namespace WpfApp1
                 double x = ellipseCenterX + radiusX * Math.Cos(currentAngle * Math.PI / 180);
                 double y = ellipseCenterY + radiusY * Math.Sin(currentAngle * Math.PI / 180);
                 double scale = CalculateScale(y);
+                double opacity = CalculateOpacity(y);
 
                 button.Width = buttonWidth * scale;
                 button.Height = buttonHeight * scale;
+                button.Opacity = opacity;
 
                 // Set scale and corner radius
                 CarouselProperties.SetScaleFactor(button, scale);
@@ -171,6 +183,7 @@ namespace WpfApp1
                 step++;
             };
         }
+
 
         private ControlTemplate CreateButtonTemplate(double scale)
         {
