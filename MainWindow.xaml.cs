@@ -12,7 +12,7 @@ namespace WpfApp1
         private double ellipseCenterY = 150; // Changed from 200 to 150 (assuming canvas height is 300)
         private double buttonWidth = 50;
         private double buttonHeight = 25;
-        private const double DefaultCornerRadius = 10; // Match the original corner radius
+        private const double DefaultCornerRadius = 5;
 
         private const int NumButtons = 8;
         private Button[] buttons = new Button[NumButtons];
@@ -78,7 +78,7 @@ namespace WpfApp1
             double minY = ellipseCenterY - ellipseHeight / 2;
             double maxY = ellipseCenterY + ellipseHeight / 2;
             double normalizedY = (y - minY) / (maxY - minY);
-            return 0.5 + normalizedY * 1.0; // Scale from 0.5 to 1.5
+            return 0.7 + normalizedY * 0.6; // Scale from 0.7 to 1.3
         }
 
         private void RotateCarousel(double rotationAngle)

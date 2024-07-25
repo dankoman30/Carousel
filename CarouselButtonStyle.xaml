@@ -9,17 +9,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" 
-                            CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <ContentPresenter.RenderTransform>
-                                <ScaleTransform x:Name="contentScale" 
-                                                ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"
-                                                ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"/>
-                            </ContentPresenter.RenderTransform>
-                        </ContentPresenter>
+                        CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="borderScale" 
+                                        ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"
+                                        ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"/>
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -43,9 +43,9 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                         To="1.1" Duration="0:0:0.1"/>
+                                     To="1.05" Duration="0:0:0.1"/>
                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                         To="1.1" Duration="0:0:0.1"/>
+                                     To="1.05" Duration="0:0:0.1"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
@@ -53,12 +53,15 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                         To="1" Duration="0:0:0.1"/>
+                                     To="1" Duration="0:0:0.1"/>
                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                         To="1" Duration="0:0:0.1"/>
+                                     To="1" Duration="0:0:0.1"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
     </Style>
+
+
+
 </ResourceDictionary>
