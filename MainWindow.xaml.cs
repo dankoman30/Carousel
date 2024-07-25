@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
 
 namespace WpfApp1
 {
@@ -10,15 +12,10 @@ namespace WpfApp1
         private double ellipseHeight = 200;
         private double ellipseCenterX = 400; // Center of Canvas (Width / 2)
         private double ellipseCenterY = 200; // Center of Canvas (Height / 2)
-
-        private double maxButtonWidth = 70;
-        private double maxButtonHeight = 35;
-        private double minButtonWidth = 30;
-        private double minButtonHeight = 15;
+        private double buttonWidth = 50;
+        private double buttonHeight = 25;
 
         private const int NumButtons = 8;
-        private const double BottomAngle = 90; // 270 degrees is the bottom of the ellipse
-
         private Button[] buttons = new Button[NumButtons];
         private double[] angles = new double[NumButtons];
 
@@ -45,21 +42,15 @@ namespace WpfApp1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = (Button)sender;
+            Button clickedButton = sender as Button;
             int clickedIndex = Array.IndexOf(buttons, clickedButton);
+            double targetAngle = 90; // Target bottom position angle
+            double currentAngle = angles[clickedIndex];
 
-            // Calculate the angle difference to move the clicked button to the bottom
-            double angleDifference = BottomAngle - angles[clickedIndex];
-            if (angleDifference < 0) angleDifference += 360;
+            double rotationAngle = targetAngle - currentAngle;
+            if (rotationAngle < 0) rotationAngle += 360;
 
-            // Rotate all buttons by the calculated difference
-            for (int i = 0; i < NumButtons; i++)
-            {
-                double newAngle = angles[i] + angleDifference;
-                if (newAngle >= 360) newAngle -= 360;
-                AnimateButtonToNewPosition(buttons[i], angles[i], newAngle);
-                angles[i] = newAngle;
-            }
+            RotateCarousel(rotationAngle);
         }
 
         private void PositionButton(Button button, double angle)
@@ -70,13 +61,30 @@ namespace WpfApp1
             double x = ellipseCenterX + radiusX * Math.Cos(angle * Math.PI / 180);
             double y = ellipseCenterY + radiusY * Math.Sin(angle * Math.PI / 180);
 
-            CalculateButtonSize(y, out double width, out double height);
+            double scale = CalculateScale(y);
+            button.RenderTransform = new ScaleTransform(scale, scale, buttonWidth / 2, buttonHeight / 2);
 
-            button.Width = width;
-            button.Height = height;
+            Canvas.SetLeft(button, x - buttonWidth / 2 * scale);
+            Canvas.SetTop(button, y - buttonHeight / 2 * scale);
+        }
 
-            Canvas.SetLeft(button, x - (width / 2));
-            Canvas.SetTop(button, y - (height / 2));
+        private double CalculateScale(double y)
+        {
+            double minY = ellipseCenterY - ellipseHeight / 2;
+            double maxY = ellipseCenterY + ellipseHeight / 2;
+            double normalizedY = (y - minY) / (maxY - minY);
+            return 0.5 + normalizedY * 0.5; // Scale between 0.5 and 1
+        }
+
+        private void RotateCarousel(double rotationAngle)
+        {
+            for (int i = 0; i < NumButtons; i++)
+            {
+                double newAngle = angles[i] + rotationAngle;
+                if (newAngle >= 360) newAngle -= 360;
+                AnimateButtonToNewPosition(buttons[i], angles[i], newAngle);
+                angles[i] = newAngle;
+            }
         }
 
         private void AnimateButtonToNewPosition(Button button, double fromAngle, double toAngle)
@@ -89,39 +97,25 @@ namespace WpfApp1
             double toX = ellipseCenterX + radiusX * Math.Cos(toAngle * Math.PI / 180);
             double toY = ellipseCenterY + radiusY * Math.Sin(toAngle * Math.PI / 180);
 
-            CalculateButtonSize(fromY, out double fromWidth, out double fromHeight);
-            CalculateButtonSize(toY, out double toWidth, out double toHeight);
+            DoubleAnimation xAnimation = new DoubleAnimation(fromX - buttonWidth / 2, toX - buttonWidth / 2, TimeSpan.FromSeconds(1));
+            DoubleAnimation yAnimation = new DoubleAnimation(fromY - buttonHeight / 2, toY - buttonHeight / 2, TimeSpan.FromSeconds(1));
 
-            TimeSpan duration = TimeSpan.FromSeconds(0.5); // Adjust animation duration as needed
-
-            DoubleAnimation xAnimation = new DoubleAnimation(fromX - (fromWidth / 2), toX - (toWidth / 2), duration);
-            DoubleAnimation yAnimation = new DoubleAnimation(fromY - (fromHeight / 2), toY - (toHeight / 2), duration);
-            DoubleAnimation widthAnimation = new DoubleAnimation(fromWidth, toWidth, duration);
-            DoubleAnimation heightAnimation = new DoubleAnimation(fromHeight, toHeight, duration);
-
-            // Add easing function for smoother animation
-            xAnimation.EasingFunction = new QuadraticEase();
-            yAnimation.EasingFunction = new QuadraticEase();
-            widthAnimation.EasingFunction = new QuadraticEase();
-            heightAnimation.EasingFunction = new QuadraticEase();
-
-            xAnimation.Completed += (s, e) => Canvas.SetLeft(button, toX - (toWidth / 2));
-            yAnimation.Completed += (s, e) => Canvas.SetTop(button, toY - (toHeight / 2));
+            xAnimation.Completed += (s, e) => Canvas.SetLeft(button, toX - buttonWidth / 2);
+            yAnimation.Completed += (s, e) => Canvas.SetTop(button, toY - buttonHeight / 2);
 
             button.BeginAnimation(Canvas.LeftProperty, xAnimation);
             button.BeginAnimation(Canvas.TopProperty, yAnimation);
-            button.BeginAnimation(Button.WidthProperty, widthAnimation);
-            button.BeginAnimation(Button.HeightProperty, heightAnimation);
-        }
 
-        private void CalculateButtonSize(double y, out double width, out double height)
-        {
-            double range = ellipseCenterY * 2; // Total vertical range of the ellipse
-            double verticalPosition = y / range; // Normalized vertical position (0 to 1)
+            // Scale animation
+            double fromScale = CalculateScale(fromY);
+            double toScale = CalculateScale(toY);
+            DoubleAnimation scaleXAnimation = new DoubleAnimation(fromScale, toScale, TimeSpan.FromSeconds(1));
+            DoubleAnimation scaleYAnimation = new DoubleAnimation(fromScale, toScale, TimeSpan.FromSeconds(1));
+            ScaleTransform scaleTransform = new ScaleTransform(fromScale, fromScale, buttonWidth / 2, buttonHeight / 2);
+            button.RenderTransform = scaleTransform;
 
-            // Calculate width and height based on Y position
-            width = minButtonWidth + (maxButtonWidth - minButtonWidth) * verticalPosition;
-            height = minButtonHeight + (maxButtonHeight - minButtonHeight) * verticalPosition;
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, scaleXAnimation);
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, scaleYAnimation);
         }
     }
 }
