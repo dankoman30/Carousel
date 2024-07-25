@@ -12,7 +12,7 @@ namespace WpfApp1
         private double ellipseCenterY = 150; // Changed from 200 to 150 (assuming canvas height is 300)
         private double buttonWidth = 50;
         private double buttonHeight = 25;
-        private const double DefaultCornerRadius = 5; // Adjust this value as needed
+        private const double DefaultCornerRadius = 10; // Match the original corner radius
 
         private const int NumButtons = 8;
         private Button[] buttons = new Button[NumButtons];
@@ -65,8 +65,9 @@ namespace WpfApp1
             button.Width = buttonWidth * scale;
             button.Height = buttonHeight * scale;
 
-            // Adjust corner radius
-            button.Template = CreateButtonTemplate(scale);
+            // Set scale and corner radius
+            CarouselProperties.SetScaleFactor(button, scale);
+            button.Tag = new CornerRadius(DefaultCornerRadius * Math.Sqrt(scale));
 
             Canvas.SetLeft(button, x - button.Width / 2);
             Canvas.SetTop(button, y - button.Height / 2);
@@ -141,8 +142,9 @@ namespace WpfApp1
                 button.Width = buttonWidth * scale;
                 button.Height = buttonHeight * scale;
 
-                // Adjust corner radius
-                button.Template = CreateButtonTemplate(scale);
+                // Set scale and corner radius
+                CarouselProperties.SetScaleFactor(button, scale);
+                button.Tag = new CornerRadius(DefaultCornerRadius * Math.Sqrt(scale));
 
                 Canvas.SetLeft(button, x - button.Width / 2);
                 Canvas.SetTop(button, y - button.Height / 2);
@@ -163,6 +165,18 @@ namespace WpfApp1
             var contentPresenter = new FrameworkElementFactory(typeof(ContentPresenter));
             contentPresenter.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
             contentPresenter.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
+
+            // Create a ScaleTransform
+            var scaleTransform = new FrameworkElementFactory(typeof(ScaleTransform));
+            scaleTransform.SetValue(ScaleTransform.ScaleXProperty, scale);
+            scaleTransform.SetValue(ScaleTransform.ScaleYProperty, scale);
+
+            // Create a TransformGroup and add the ScaleTransform to it
+            var transformGroup = new FrameworkElementFactory(typeof(TransformGroup));
+            transformGroup.AppendChild(scaleTransform);
+
+            // Set the TransformGroup as the RenderTransform of the ContentPresenter
+            contentPresenter.SetValue(ContentPresenter.RenderTransformProperty, transformGroup);
 
             border.AppendChild(contentPresenter);
             template.VisualTree = border;
