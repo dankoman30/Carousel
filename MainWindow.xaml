@@ -6,58 +6,70 @@
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfApp1;Component/CarouselButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Local styles here -->
+        </ResourceDictionary>
+    </Window.Resources>
+
+
     <Grid>
         <Canvas x:Name="mainCanvas">
-            <Button x:Name="button1" Width="50" Height="25">
+            <Button x:Name="button1" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
                         Kind="Abacus"/>
                 </Grid>
             </Button>
-            <Button x:Name="button2" Width="50" Height="25">
+            <Button x:Name="button2" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                         <icons:PackIconMaterial 
                         Kind="TableAccount"/>
                     </Grid>
                 </Button>
-            <Button x:Name="button3" Width="50" Height="25">
+            <Button x:Name="button3" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
                         Kind="Kangaroo"/>
                 </Grid>
             </Button>
-            <Button x:Name="button4" Width="50" Height="25">
+            <Button x:Name="button4" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
                         Kind="BabyBuggy"/>
                 </Grid>
             </Button>
-            <Button x:Name="button5" Width="50" Height="25">
+            <Button x:Name="button5" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
                         Kind="CabinAFrame"/>
                 </Grid>
             </Button>
-            <Button x:Name="button6" Width="50" Height="25">
+            <Button x:Name="button6" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
                         Kind="DanceBallroom"/>
                 </Grid>
             </Button>
-            <Button x:Name="button7" Width="50" Height="25">
+            <Button x:Name="button7" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
                         Kind="FaceAgent"/>
                 </Grid>
             </Button>
-            <Button x:Name="button8" Width="50" Height="25">
+            <Button x:Name="button8" Width="50" Height="25" Style="{StaticResource CarouselButtonStyle}">
                 <Grid 
                     ClipToBounds="True">
                     <icons:PackIconMaterial 
