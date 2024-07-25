@@ -46,10 +46,29 @@ namespace WpfApp1
             double targetAngle = 90; // Target bottom position angle
             double currentAngle = angles[clickedIndex];
 
-            double rotationAngle = targetAngle - currentAngle;
-            if (rotationAngle < 0) rotationAngle += 360;
+            // Check if the clicked button is already at the bottom (90 degrees)
+            if (Math.Abs(currentAngle - targetAngle) < 0.1) // Use a small threshold for floating-point comparison
+            {
+                // The button at the bottom was clicked again
+                OnBottomButtonReselected(clickedButton);
+            }
+            else
+            {
+                // Rotate the carousel as before
+                double rotationAngle = targetAngle - currentAngle;
+                if (rotationAngle < 0) rotationAngle += 360;
+                RotateCarousel(rotationAngle);
+            }
+        }
 
-            RotateCarousel(rotationAngle);
+        private void OnBottomButtonReselected(Button button)
+        {
+            // Implement your logic for when the bottom button is reselected
+            // For example:
+            MessageBox.Show($"Button {button.Content} was reselected!");
+
+            // Or call another method:
+            // PerformActionOnBottomButtonReselect(button);
         }
 
         private void PositionButton(Button button, double angle)
