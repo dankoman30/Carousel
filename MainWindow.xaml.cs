@@ -12,7 +12,7 @@ namespace WpfApp1
         private double ellipseCenterY = 150; // Changed from 200 to 150 (assuming canvas height is 300)
         private double buttonWidth = 50;
         private double buttonHeight = 25;
-        private double scaleFactor = 3;
+        private const double DefaultCornerRadius = 5; // Adjust this value as needed
 
         private const int NumButtons = 8;
         private Button[] buttons = new Button[NumButtons];
@@ -61,10 +61,15 @@ namespace WpfApp1
             double y = ellipseCenterY + radiusY * Math.Sin(angle * Math.PI / 180);
 
             double scale = CalculateScale(y);
-            button.RenderTransform = new ScaleTransform(scale, scale, buttonWidth / scaleFactor, buttonHeight / scaleFactor);
 
-            Canvas.SetLeft(button, x - buttonWidth / 2 * scale);
-            Canvas.SetTop(button, y - buttonHeight / 2 * scale);
+            button.Width = buttonWidth * scale;
+            button.Height = buttonHeight * scale;
+
+            // Adjust corner radius
+            button.Template = CreateButtonTemplate(scale);
+
+            Canvas.SetLeft(button, x - button.Width / 2);
+            Canvas.SetTop(button, y - button.Height / 2);
         }
 
         private double CalculateScale(double y)
@@ -72,7 +77,7 @@ namespace WpfApp1
             double minY = ellipseCenterY - ellipseHeight / 2;
             double maxY = ellipseCenterY + ellipseHeight / 2;
             double normalizedY = (y - minY) / (maxY - minY);
-            return 0.7 + normalizedY * 0.3; // Adjusted scale range from 0.7 to 1
+            return 0.5 + normalizedY * 1.0; // Scale from 0.5 to 1.5
         }
 
         private void RotateCarousel(double rotationAngle)
@@ -133,12 +138,36 @@ namespace WpfApp1
                 double y = ellipseCenterY + radiusY * Math.Sin(currentAngle * Math.PI / 180);
                 double scale = CalculateScale(y);
 
-                Canvas.SetLeft(button, x - buttonWidth / 2 * scale);
-                Canvas.SetTop(button, y - buttonHeight / 2 * scale);
+                button.Width = buttonWidth * scale;
+                button.Height = buttonHeight * scale;
 
-                button.RenderTransform = new ScaleTransform(scale, scale, buttonWidth / 2, buttonHeight / 2);
+                // Adjust corner radius
+                button.Template = CreateButtonTemplate(scale);
+
+                Canvas.SetLeft(button, x - button.Width / 2);
+                Canvas.SetTop(button, y - button.Height / 2);
+
                 step++;
             };
+        }
+
+        private ControlTemplate CreateButtonTemplate(double scale)
+        {
+            double cornerRadius = DefaultCornerRadius * Math.Sqrt(scale);
+
+            var template = new ControlTemplate(typeof(Button));
+            var border = new FrameworkElementFactory(typeof(Border));
+            border.SetValue(Border.CornerRadiusProperty, new CornerRadius(cornerRadius));
+            border.SetValue(Border.BackgroundProperty, new TemplateBindingExtension(Button.BackgroundProperty));
+
+            var contentPresenter = new FrameworkElementFactory(typeof(ContentPresenter));
+            contentPresenter.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+            contentPresenter.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
+
+            border.AppendChild(contentPresenter);
+            template.VisualTree = border;
+
+            return template;
         }
     }
 }
