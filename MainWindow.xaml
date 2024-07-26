@@ -3,26 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:uc="clr-namespace:WpfApp1.UserControls"
         mc:Ignorable="d"
         Background="Black"
         Title="MainWindow" Height="450" Width="800">
 
 
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/WpfApp1;Component/Styles/CarouselButtonStyle.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <!-- Local styles here -->
-        </ResourceDictionary>
-    </Window.Resources>
-
-
     <Grid>
-        <uc:CarouselUC 
-            CarouselButtons="{Binding CarouselButtons}"
+        <uc:CarouselUC
+            CarouselButtons="{Binding CarouselViewModel.CarouselButtons}"
             CarouselWidth="400" 
             CarouselHeight="100"/>
     </Grid>
