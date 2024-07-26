@@ -1,19 +1,27 @@
-﻿using MahApps.Metro.IconPacks;
-using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using WpfApp1.Models;
+using WpfApp1.ViewModels.Base;
 
+using MahApps.Metro.IconPacks;
 
-namespace WpfApp1
+namespace WpfApp1.ViewModels
 {
-    public partial class MainWindow : Window
+    public class CarouselViewModel:ViewModelBase
     {
-        public ObservableCollection<CarouselButton> CarouselButtons { get; set; }
-        public MainWindow()
+        private ObservableCollection<CarouselButton> _buttons = null;
+        public ObservableCollection<CarouselButton>? Buttons
         {
-            InitializeComponent();
+            get => _buttons;
+            set
+            {
+                _buttons = value;
+                OnPropertyChanged();
+            }
+        }
 
-            CarouselButtons = new ObservableCollection<CarouselButton>
+        public CarouselViewModel()
+        {
+            Buttons = new ObservableCollection<CarouselButton>
             {
                 new CarouselButton { Icon = PackIconMaterialKind.Abacus },
                 new CarouselButton { Icon = PackIconMaterialKind.TableAccount },
@@ -23,8 +31,6 @@ namespace WpfApp1
                 new CarouselButton { Icon = PackIconMaterialKind.DanceBallroom },
                 new CarouselButton { Icon = PackIconMaterialKind.FaceAgent },
             };
-
-            DataContext = this;
         }
     }
 }
