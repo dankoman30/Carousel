@@ -31,7 +31,7 @@ namespace WpfApp1.UserControls
             DependencyProperty.Register("CarouselButtons",
                 typeof(ObservableCollection<CarouselButton>),
                 typeof(CarouselUC),
-                new PropertyMetadata(null, OnCarouselButtonsChanged));
+                new PropertyMetadata(null, new PropertyChangedCallback(OnCarouselButtonsChanged)));
 
         private static void OnCarouselButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -74,10 +74,12 @@ namespace WpfApp1.UserControls
             DependencyProperty.Register("CarouselWidth",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(400.0, OnCarouselSizeChanged));
+                new PropertyMetadata(400.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
         private void UpdateCarouselSize()
         {
+            if(buttons == null) return;
+
             ellipseWidth = CarouselWidth;
             ellipseHeight = CarouselHeight;
             ellipseCenterX = ActualWidth / 2;
@@ -99,7 +101,7 @@ namespace WpfApp1.UserControls
             DependencyProperty.Register("CarouselHeight",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(100.0, OnCarouselSizeChanged));
+                new PropertyMetadata(100.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
         public CarouselUC()
         {
