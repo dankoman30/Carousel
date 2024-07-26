@@ -180,16 +180,6 @@ namespace WpfApp1.UserControls
             }
         }
 
-        private void OnBottomButtonReselected(Button button)
-        {
-            // Implement your logic for when the bottom button is reselected
-            // For example:
-            MessageBox.Show($"Button {button.Content} was reselected!");
-
-            // Or call another method:
-            // PerformActionOnBottomButtonReselect(button);
-        }
-
         private void RotateCarousel(double rotationAngle)
         {
             for (int i = 0; i < buttons.Length; i++)
