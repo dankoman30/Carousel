@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using WpfApp1.Models;
 
@@ -155,7 +154,9 @@ namespace WpfApp1.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = sender as Button;
+            Button? clickedButton = sender as Button;
+            if (clickedButton == null) return;
+
             int clickedIndex = Array.IndexOf(buttons, clickedButton);
             double targetAngle = 90; // Target bottom position angle
             double currentAngle = angles[clickedIndex];
@@ -163,8 +164,12 @@ namespace WpfApp1.UserControls
             // Check if the clicked button is already at the bottom (90 degrees)
             if (Math.Abs(currentAngle - targetAngle) < 0.1) // Use a small threshold for floating-point comparison
             {
-                // The button at the bottom was clicked again
-                OnBottomButtonReselected(clickedButton);
+                // Execute the command associated with the clicked button
+                var carouselButton = CarouselButtons[clickedIndex];
+                if (carouselButton.Command != null && carouselButton.Command.CanExecute(null))
+                {
+                    carouselButton.Command.Execute(null);
+                }
             }
             else
             {
