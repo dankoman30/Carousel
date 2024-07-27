@@ -21,6 +21,7 @@ namespace WpfApp1.UserControls
         private Button[] buttons;
         private double[] angles;
 
+        #region "Observable Collections Dependency Properties"
         public ObservableCollection<CarouselButton> CarouselButtons
         {
             get { return (ObservableCollection<CarouselButton>)GetValue(CarouselButtonsProperty); }
@@ -33,37 +34,9 @@ namespace WpfApp1.UserControls
                 typeof(CarouselUC),
                 new PropertyMetadata(null, new PropertyChangedCallback(OnCarouselButtonsChanged)));
 
-        private static void OnCarouselButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is CarouselUC carousel)
-            {
-                if (e.OldValue is ObservableCollection<CarouselButton> oldCollection)
-                {
-                    oldCollection.CollectionChanged -= carousel.CarouselButtons_CollectionChanged;
-                }
+        #endregion
 
-                if (e.NewValue is ObservableCollection<CarouselButton> newCollection)
-                {
-                    newCollection.CollectionChanged += carousel.CarouselButtons_CollectionChanged;
-                }
-
-                carousel.InitializeCarousel();
-            }
-        }
-
-        private void CarouselButtons_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            InitializeCarousel();
-        }
-
-        private static void OnCarouselSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is CarouselUC carousel)
-            {
-                carousel.UpdateCarouselSize();
-            }
-        }
-
+        #region "Double Dependency Properties"
         public double CarouselWidth
         {
             get { return (double)GetValue(CarouselWidthProperty); }
@@ -76,21 +49,7 @@ namespace WpfApp1.UserControls
                 typeof(CarouselUC),
                 new PropertyMetadata(400.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
-        private void UpdateCarouselSize()
-        {
-            if(buttons == null) return;
-
-            ellipseWidth = CarouselWidth;
-            ellipseHeight = CarouselHeight;
-            ellipseCenterX = ActualWidth / 2;
-            ellipseCenterY = ActualHeight / 2;
-
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                PositionButton(buttons[i], angles[i]);
-            }
-        }
-
+       
         public double CarouselHeight
         {
             get { return (double)GetValue(CarouselHeightProperty); }
@@ -103,17 +62,136 @@ namespace WpfApp1.UserControls
                 typeof(CarouselUC),
                 new PropertyMetadata(100.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
+
+        public double CarouselReflectionOpacity
+        {
+            get { return (double)GetValue(CarouselReflectionOpacityProperty); }
+            set { SetValue(CarouselReflectionOpacityProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselReflectionOpacityProperty =
+            DependencyProperty.Register("CarouselReflectionOpacity",
+                typeof(double),
+                typeof(CarouselUC),
+                new PropertyMetadata(0.25));
+
+
+        #endregion
+
+        #region "Brush Dependency Properties"
+
+        public Brush CarouselButtonBackground
+        {
+            get { return (Brush)GetValue(CarouselButtonBackgroundProperty); }
+            set { SetValue(CarouselButtonBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonBackgroundProperty =
+            DependencyProperty.Register("CarouselButtonBackground",
+                typeof(Brush),
+                typeof(CarouselUC),
+                new PropertyMetadata(Brushes.Green));
+
+
+        public Brush CarouselButtonBorderBrush
+        {
+            get { return (Brush)GetValue(CarouselButtonBorderBrushProperty); }
+            set { SetValue(CarouselButtonBorderBrushProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonBorderBrushProperty =
+            DependencyProperty.Register("CarouselButtonBorderBrush",
+                typeof(Brush),
+                typeof(CarouselUC),
+                new PropertyMetadata(Brushes.DodgerBlue));
+
+        public Brush CarouselButtonMouseOverBackground
+        {
+            get { return (Brush)GetValue(CarouselButtonMouseOverBackgroundProperty); }
+            set { SetValue(CarouselButtonMouseOverBackgroundProperty, value); }
+        }
+
+            public static readonly DependencyProperty CarouselButtonMouseOverBackgroundProperty =
+            DependencyProperty.Register("CarouselButtonMouseOverBackground",
+                typeof(Brush),
+                typeof(CarouselUC),
+                new PropertyMetadata(Brushes.LightBlue));
+
+        public Brush CarouselButtonIsPressedBackground
+        {
+            get { return (Brush)GetValue(CarouselButtonIsPressedBackgroundProperty); }
+            set { SetValue(CarouselButtonIsPressedBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonIsPressedBackgroundProperty =
+            DependencyProperty.Register("CarouselButtonIsPressedBackground",
+                typeof(Brush),
+                typeof(CarouselUC),
+                new PropertyMetadata(Brushes.LightGreen));
+
+        public Brush CarouselButtonIconBackground
+        {
+            get { return (Brush)GetValue(CarouselButtonIconBackgroundProperty); }
+            set { SetValue(CarouselButtonIconBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonIconBackgroundProperty =
+            DependencyProperty.Register("CarouselButtonIconBackground",
+                typeof(Brush),
+                typeof(CarouselUC),
+                new PropertyMetadata(Brushes.White,new PropertyChangedCallback(OnCarouselButtonIconBackgroundChanged)));
+
+
+        public Brush CarouselButtonIconForeground
+        {
+            get { return (Brush)GetValue(CarouselButtonIconForegroundProperty); }
+            set { SetValue(CarouselButtonIconForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonIconForegroundProperty =
+            DependencyProperty.Register("CarouselButtonIconForeground",
+                typeof(Brush),
+                typeof(CarouselUC),
+                new PropertyMetadata(Brushes.Black, new PropertyChangedCallback(OnCarouselButtonIconBackgroundChanged)));
+
+        #endregion
+
+        #region "Color Dependency Property"
+
+        public Color CarouselReflectionGradientStart
+        {
+            get { return (Color)GetValue(CarouselReflectionGradientStartProperty); }
+            set { SetValue(CarouselReflectionGradientStartProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselReflectionGradientStartProperty =
+            DependencyProperty.Register("CarouselReflectionGradientStart",
+                typeof(Color),
+                typeof(CarouselUC),
+                new PropertyMetadata(Colors.White));
+
+        public Color CarouselReflectionGradientEnd
+        {
+            get { return (Color)GetValue(CarouselReflectionGradientEndProperty); }
+            set { SetValue(CarouselReflectionGradientEndProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselReflectionGradientEndProperty =
+            DependencyProperty.Register("CarouselReflectionGradientEnd",
+                typeof(Color),
+                typeof(CarouselUC),
+                new PropertyMetadata(Colors.Transparent));
+
+        #endregion
+
         public CarouselUC()
         {
             InitializeComponent();
             this.Loaded += CarouselControl_Loaded;
         }
 
-        private void CarouselControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            InitializeCarousel();
-        }
 
+        #region "Carousel Methods"
         private void InitializeCarousel()
         {
             if (CarouselButtons == null) return;
@@ -143,7 +221,8 @@ namespace WpfApp1.UserControls
                     {
                         Kind = carouselButton.Icon,
                         Width = 20,
-                        Height = 20
+                        Height = 20,
+                        Background = CarouselButtonIconBackground
                     }
                 };
 
@@ -153,35 +232,37 @@ namespace WpfApp1.UserControls
                 mainCanvas.Children.Add(buttons[i]);
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+       
+        private double CalculateOpacity(double y)
         {
-            Button? clickedButton = sender as Button;
-            if (clickedButton == null) return;
-
-            int clickedIndex = Array.IndexOf(buttons, clickedButton);
-            double targetAngle = 90; // Target bottom position angle
-            double currentAngle = angles[clickedIndex];
-
-            // Check if the clicked button is already at the bottom (90 degrees)
-            if (Math.Abs(currentAngle - targetAngle) < 0.1) // Use a small threshold for floating-point comparison
-            {
-                // Execute the command associated with the clicked button
-                var carouselButton = CarouselButtons[clickedIndex];
-                if (carouselButton.Command != null && carouselButton.Command.CanExecute(null))
-                {
-                    carouselButton.Command.Execute(null);
-                }
-            }
-            else
-            {
-                // Rotate the carousel as before
-                double rotationAngle = targetAngle - currentAngle;
-                if (rotationAngle < 0) rotationAngle += 360;
-                RotateCarousel(rotationAngle);
-            }
+            double minY = ellipseCenterY - ellipseHeight / 2;
+            double maxY = ellipseCenterY + ellipseHeight / 2;
+            double normalizedY = (y - minY) / (maxY - minY);
+            return 0.6 + normalizedY * 0.4; // Opacity from 0.6 to 1.0
+        }
+        private double CalculateScale(double y)
+        {
+            double minY = ellipseCenterY - ellipseHeight / 2;
+            double maxY = ellipseCenterY + ellipseHeight / 2;
+            double normalizedY = (y - minY) / (maxY - minY);
+            return 0.7 + normalizedY * 0.6; // Scale from 0.7 to 1.3
         }
 
+        private void UpdateCarouselSize()
+        {
+            if (buttons == null) return;
+
+            ellipseWidth = CarouselWidth;
+            ellipseHeight = CarouselHeight;
+            ellipseCenterX = ActualWidth / 2;
+            ellipseCenterY = ActualHeight / 2;
+
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                PositionButton(buttons[i], angles[i]);
+            }
+        }
         private void RotateCarousel(double rotationAngle)
         {
             for (int i = 0; i < buttons.Length; i++)
@@ -192,7 +273,6 @@ namespace WpfApp1.UserControls
                 angles[i] = newAngle;
             }
         }
-
         private void AnimateButtonToNewPosition(Button button, double fromAngle, double toAngle)
         {
             double durationSeconds = 0.5;
@@ -255,7 +335,6 @@ namespace WpfApp1.UserControls
                 step++;
             };
         }
-
         private void PositionButton(Button? button, double angle)
         {
             if (button == null)
@@ -282,21 +361,94 @@ namespace WpfApp1.UserControls
             Canvas.SetTop(button, y - button.Height / 2);
         }
 
-        private double CalculateOpacity(double y)
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double minY = ellipseCenterY - ellipseHeight / 2;
-            double maxY = ellipseCenterY + ellipseHeight / 2;
-            double normalizedY = (y - minY) / (maxY - minY);
-            return 0.6 + normalizedY * 0.4; // Opacity from 0.6 to 1.0
+            Button? clickedButton = sender as Button;
+            if (clickedButton == null) return;
+
+            int clickedIndex = Array.IndexOf(buttons, clickedButton);
+            double targetAngle = 90; // Target bottom position angle
+            double currentAngle = angles[clickedIndex];
+
+            // Check if the clicked button is already at the bottom (90 degrees)
+            if (Math.Abs(currentAngle - targetAngle) < 0.1) // Use a small threshold for floating-point comparison
+            {
+                // Execute the command associated with the clicked button
+                var carouselButton = CarouselButtons[clickedIndex];
+                if (carouselButton.Command != null && carouselButton.Command.CanExecute(null))
+                {
+                    carouselButton.Command.Execute(null);
+                }
+            }
+            else
+            {
+                // Rotate the carousel as before
+                double rotationAngle = targetAngle - currentAngle;
+                if (rotationAngle < 0) rotationAngle += 360;
+                RotateCarousel(rotationAngle);
+            }
         }
 
-        private double CalculateScale(double y)
+        private void CarouselControl_Loaded(object sender, RoutedEventArgs e)
         {
-            double minY = ellipseCenterY - ellipseHeight / 2;
-            double maxY = ellipseCenterY + ellipseHeight / 2;
-            double normalizedY = (y - minY) / (maxY - minY);
-            return 0.7 + normalizedY * 0.6; // Scale from 0.7 to 1.3
+            InitializeCarousel();
         }
+        private void CarouselButtons_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            InitializeCarousel();
+        }
+
+
+        private static void OnCarouselSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CarouselUC carousel)
+            {
+                carousel.UpdateCarouselSize();
+            }
+        }
+        private static void OnCarouselButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CarouselUC carousel)
+            {
+                if (e.OldValue is ObservableCollection<CarouselButton> oldCollection)
+                {
+                    oldCollection.CollectionChanged -= carousel.CarouselButtons_CollectionChanged;
+                }
+
+                if (e.NewValue is ObservableCollection<CarouselButton> newCollection)
+                {
+                    newCollection.CollectionChanged += carousel.CarouselButtons_CollectionChanged;
+                }
+
+                carousel.InitializeCarousel();
+            }
+        }
+
+
+        private static void OnCarouselButtonIconBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CarouselUC carousel)
+            {
+                carousel.RefreshButtons();
+            }
+        }
+        private void RefreshButtons()
+        {
+            if (buttons != null)
+            {
+                foreach (var button in buttons)
+                {
+                    if (button.Content is PackIconMaterial icon)
+                    {
+                        icon.Background = CarouselButtonIconBackground;
+                        icon.Foreground = CarouselButtonIconForeground;
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }
 
