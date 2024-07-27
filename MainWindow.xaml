@@ -11,8 +11,13 @@
     <Grid>
         <uc:CarouselUC
             CarouselButtons="{Binding CarouselViewModel.CarouselButtons}"
-            CarouselWidth="550" 
+            CarouselWidth="500" 
             CarouselHeight="80"
+            CarouselTop="20"
+            CarouselLeft="20"
+            CarouselButtonIconWidth="20"
+            CarouselButtonIconHeight="20"
+            CarouselButtonIconBorderWidth ="15"
             CarouselButtonBackground="WhiteSmoke"
             CarouselButtonBorderBrush="DarkGray"
             CarouselButtonMouseOverBackground="Green"
@@ -21,6 +26,7 @@
             CarouselButtonIconForeground="Black"
             CarouselReflectionGradientStart="Black"
             CarouselReflectionGradientEnd="Transparent"
-            CarouselReflectionOpacity=".25"/>
+            CarouselReflectionOpacity=".25"
+            CarouselButtonTextForeground="White"/>
     </Grid>
 </Window>

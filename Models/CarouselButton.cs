@@ -7,5 +7,6 @@ namespace WpfApp1.Models
     {
         public PackIconMaterialKind Icon { get; set; } = PackIconMaterialKind.None;
         public ICommand? Command { get; set; } = null;
+        public string? Text { get; set; } = string.Empty;
     }
 }

@@ -25,13 +25,13 @@ namespace WpfApp1.ViewModels
         {
             CarouselButtons = new ObservableCollection<CarouselButton>
             {
-                new CarouselButton { Icon = PackIconMaterialKind.Abacus, Command = new CommandsBase(abacusExecute) },
-                new CarouselButton { Icon = PackIconMaterialKind.TableAccount, Command = new CommandsBase(tableAccountExecute) },
-                new CarouselButton { Icon = PackIconMaterialKind.Kangaroo, Command = new CommandsBase(kangarooExecute) },
-                new CarouselButton { Icon = PackIconMaterialKind.BabyBuggy, Command = new CommandsBase(babyBuggyExecute) },
-                new CarouselButton { Icon = PackIconMaterialKind.CabinAFrame, Command = new CommandsBase(cabinAFrameExecute) },
+                new CarouselButton { Icon = PackIconMaterialKind.Abacus, Command = new CommandsBase(abacusExecute),Text = "Hello" },
+                new CarouselButton { Icon = PackIconMaterialKind.TableAccount, Command = new CommandsBase(tableAccountExecute),Text = "Hello" },
+                new CarouselButton { Icon = PackIconMaterialKind.Kangaroo, Command = new CommandsBase(kangarooExecute),Text = "Hello" },
+                new CarouselButton { Icon = PackIconMaterialKind.BabyBuggy, Command = new CommandsBase(babyBuggyExecute),Text = "Hello" },
+                new CarouselButton { Icon = PackIconMaterialKind.CabinAFrame, Command = new CommandsBase(cabinAFrameExecute),Text = "Hello" },
                 new CarouselButton { Icon = PackIconMaterialKind.DanceBallroom, Command = new CommandsBase(danceBallRoomExecute) },
-                new CarouselButton { Icon = PackIconMaterialKind.FaceAgent, Command = new CommandsBase(fanceAgentExecute) },
+                new CarouselButton { Icon = PackIconMaterialKind.FaceAgent, Command = new CommandsBase(fanceAgentExecute),Text = "Hello" },
             };
         }
 
