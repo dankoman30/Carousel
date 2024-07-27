@@ -3,10 +3,11 @@
                     xmlns:materialDesign="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:uc="clr-namespace:WpfApp1.UserControls"
                     xmlns:local="clr-namespace:WpfApp1">
+    
     <!-- Register the converter -->
     <local:MultiplyConverter x:Key="DoubleHeightConverter" Factor="2"/>
-    
-    <!-- Replace YourNamespace with your actual namespace -->
+
+    <!-- CarouselButtonStyle -->
     <Style x:Key="CarouselButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="LightGray"/>
         <Setter Property="Foreground" Value="Black"/>
@@ -14,17 +15,24 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!-- Button Content -->
-                        <Border x:Name="border" 
+                        <Border x:Name="border"
+                            Grid.Row="0"
                             CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
                             Background="{Binding ElementName=Carousel, Path=CarouselButtonBackground}"
                             BorderBrush="{Binding ElementName=Carousel, Path= CarouselButtonBorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             RenderTransformOrigin="0.5,0.5">
                             <Border.RenderTransform>
-                                <ScaleTransform x:Name="borderScale" 
-                                            ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"
-                                            ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"/>
+                                <ScaleTransform 
+                                    x:Name="borderScale"
+                                    ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"
+                                    ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"/>
                             </Border.RenderTransform>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <ContentPresenter.Resources>
@@ -58,7 +66,23 @@
                                 <VisualBrush Visual="{Binding ElementName=border}" />
                             </Border.Background>
                         </Border>
-                    </Grid>
+
+                        <!-- Text Content -->
+                        <TextBlock 
+                            Grid.Row="1"
+                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                            HorizontalAlignment="Center"
+                            Margin="-40,5,0,0"
+                            Foreground="{Binding RelativeSource={RelativeSource AncestorType=uc:CarouselUC}, Path=CarouselButtonTextForeground}">
+                            <TextBlock.RenderTransform>
+                                <ScaleTransform 
+                                    x:Name="textScale"
+                                    ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"
+                                    ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    
+                        </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{Binding ElementName=Carousel, Path=CarouselButtonMouseOverBackground}"/>
