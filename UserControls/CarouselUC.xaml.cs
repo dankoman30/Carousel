@@ -405,6 +405,9 @@ namespace WpfApp1.UserControls
 
                 UpdateButton(button, currentAngle);
 
+                // Update Z-index during animation
+                Panel.SetZIndex(button, CalculateZIndex(currentAngle));
+
                 step++;
             };
         }
@@ -437,6 +440,9 @@ namespace WpfApp1.UserControls
 
             Canvas.SetLeft(button, x - button.Width / 2);
             Canvas.SetTop(button, y - (button.Height / 2));
+
+            // Set the Z-index
+            Panel.SetZIndex(button, CalculateZIndex(currentAngle));
         }
 
         private double CalculateOpacity(double y)
@@ -453,7 +459,14 @@ namespace WpfApp1.UserControls
             double normalizedY = (y - minY) / (maxY - minY);
             return 0.7 + normalizedY * 0.6; // Scale from 0.7 to 1.3
         }
+        private int CalculateZIndex(double angle)
+        {
+            // Normalize the angle to be between 0 and 360
+            angle = (angle % 360 + 360) % 360;
 
+            // Calculate Z-index: highest (1000) at bottom (90 degrees), lowest (0) at top (270 degrees)
+            return 1000 - (int)Math.Round(Math.Abs(angle - 90) * (1000.0 / 180));
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CarouselButton? clickedButton = sender as CarouselButton;

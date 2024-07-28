@@ -25,13 +25,13 @@ namespace WpfApp1.ViewModels
         {
             CarouselButtons = new ObservableCollection<CarouselButton>
             {
-                new CarouselButton { Icon = PackIconMaterialKind.Abacus, Command = new CommandsBase(abacusExecute),Text = "Hello" },
-                new CarouselButton { Icon = PackIconMaterialKind.TableAccount, Command = new CommandsBase(tableAccountExecute),Text = "Hello" },
-                new CarouselButton { Icon = PackIconMaterialKind.Kangaroo, Command = new CommandsBase(kangarooExecute),Text = "Hello" },
-                new CarouselButton { Icon = PackIconMaterialKind.BabyBuggy, Command = new CommandsBase(babyBuggyExecute),Text = "Hello" },
-                new CarouselButton { Icon = PackIconMaterialKind.CabinAFrame, Command = new CommandsBase(cabinAFrameExecute),Text = "Hello" },
-                new CarouselButton { Icon = PackIconMaterialKind.DanceBallroom, Command = new CommandsBase(danceBallRoomExecute) },
-                new CarouselButton { Icon = PackIconMaterialKind.FaceAgent, Command = new CommandsBase(fanceAgentExecute),Text = "Hello" },
+                new CarouselButton { Icon = PackIconMaterialKind.Abacus, Command = new CommandsBase(abacusExecute),Text = "CATIA V6" },
+                new CarouselButton { Icon = PackIconMaterialKind.TableAccount, Command = new CommandsBase(tableAccountExecute),Text = "Dan Koman" },
+                new CarouselButton { Icon = PackIconMaterialKind.Kangaroo, Command = new CommandsBase(kangarooExecute),Text = "Marc Jeeves" },
+                new CarouselButton { Icon = PackIconMaterialKind.BabyBuggy, Command = new CommandsBase(babyBuggyExecute),Text = "Madison Keck" },
+                new CarouselButton { Icon = PackIconMaterialKind.CabinAFrame, Command = new CommandsBase(cabinAFrameExecute),Text = "Jake Veilleux" },
+                new CarouselButton { Icon = PackIconMaterialKind.DanceBallroom, Command = new CommandsBase(danceBallRoomExecute),Text = "Jerad Parrish" },
+                new CarouselButton { Icon = PackIconMaterialKind.FaceAgent, Command = new CommandsBase(fanceAgentExecute),Text = "Sean Smith" },
             };
         }
 

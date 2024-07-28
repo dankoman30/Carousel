@@ -46,7 +46,9 @@
                         </Border>
 
                         <!-- Reflection Effect -->
-                        <Border Opacity="{Binding ElementName=Carousel, Path=CarouselReflectionOpacity,FallbackValue=0.25}">
+                        <Border
+                            IsHitTestVisible="False"
+                            Opacity="{Binding ElementName=Carousel, Path=CarouselReflectionOpacity,FallbackValue=0.25}">
                             <Border.Effect>
                                 <BlurEffect Radius="2"/>
                             </Border.Effect>
@@ -73,7 +75,7 @@
                             Grid.Row="1"
                             Text="{Binding RelativeSource={RelativeSource AncestorType=models:CarouselButton}, Path=Text}"
                             HorizontalAlignment="Center"
-                            Margin="-40,5,0,0"
+                            Margin="-5 10 0 0"
                             Foreground="{Binding RelativeSource={RelativeSource AncestorType=uc:CarouselUC}, Path=CarouselButtonTextForeground}">
                             <TextBlock.RenderTransform>
                                 <ScaleTransform 
