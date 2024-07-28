@@ -59,7 +59,7 @@
                                 <TransformGroup>
                                     <ScaleTransform ScaleX="1" ScaleY="-1"/>
                                     <!-- Offset the reflection downwards by the height of the button -->
-                                    <TranslateTransform Y="{Binding ActualHeight, ElementName=border, Converter={StaticResource DoubleHeightConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TranslateTransform Y="{Binding ElementName=Carousel, Path=CarouselButtonReflectionOffset, Converter={StaticResource DoubleHeightConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                                 </TransformGroup>
                             </Border.RenderTransform>
                             <Border.Background>

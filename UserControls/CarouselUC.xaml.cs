@@ -109,7 +109,7 @@ namespace WpfApp1.UserControls
             DependencyProperty.Register("CarouselButtonIconWidth",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(20.0));
+                new PropertyMetadata(20.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
         public double CarouselButtonIconHeight
         {
@@ -121,7 +121,7 @@ namespace WpfApp1.UserControls
             DependencyProperty.Register("CarouselButtonIconHeight",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(20.0));
+                new PropertyMetadata(20.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
         public double CarouselButtonIconBorderWidth
         {
@@ -133,8 +133,20 @@ namespace WpfApp1.UserControls
             DependencyProperty.Register("CarouselButtonIconBorderWidth",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(5.0));
+                new PropertyMetadata(5.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
         
+
+        public double CarouselButtonReflectionOffset
+        {
+            get { return (double)GetValue(CarouselButtonReflectionOffsetProperty); }
+            set { SetValue(CarouselButtonReflectionOffsetProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonReflectionOffsetProperty =
+            DependencyProperty.Register("CarouselButtonReflectionOffset",
+                typeof(double),
+                typeof(CarouselUC),
+                new PropertyMetadata(25.0));
         #endregion
 
         #region "Brush Dependency Properties"
@@ -277,7 +289,6 @@ namespace WpfApp1.UserControls
             mainCanvas.Children.Clear();
 
             SetButtonPositions();
-            _buttonHeight = (CarouselButtonIconHeight + CarouselButtonIconBorderWidth);
 
             int numberOfButtons = CarouselButtons.Count;
             buttons = new Button[numberOfButtons];
@@ -327,6 +338,7 @@ namespace WpfApp1.UserControls
             _ellipseCenterX = (((_ellipseWidth / 2) + CarouselLeft) + _buttonWidth);
             _ellipseCenterY = (((_ellipseHeight / 2) + CarouselTop) + _buttonHeight);
             _buttonWidth = (CarouselButtonIconWidth + CarouselButtonIconBorderWidth);
+            _buttonHeight = (CarouselButtonIconHeight + CarouselButtonIconBorderWidth);
         }
         private void RotateCarousel(double rotationAngle)
         {
@@ -429,8 +441,6 @@ namespace WpfApp1.UserControls
             return 0.7 + normalizedY * 0.6; // Scale from 0.7 to 1.3
         }
 
-
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button? clickedButton = sender as Button;
@@ -459,12 +469,10 @@ namespace WpfApp1.UserControls
             }
         }
 
-
         private void CarouselButtons_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             InitializeCarousel();
         }
-
 
         private static void OnCarouselSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -490,7 +498,6 @@ namespace WpfApp1.UserControls
                 carousel.InitializeCarousel();
             }
         }
-
 
         private static void OnCarouselButtonIconBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
