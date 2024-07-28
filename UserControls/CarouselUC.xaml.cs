@@ -16,7 +16,6 @@ namespace WpfApp1.UserControls
         private double _ellipseCenterY;
         private double _buttonWidth;
         private double _buttonHeight;
-        private const double _defaultCornerRadius = 5;
 
         private Button[] buttons;
         private double[] angles;
@@ -136,17 +135,30 @@ namespace WpfApp1.UserControls
                 new PropertyMetadata(5.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
         
 
-        public double CarouselButtonReflectionOffset
+        public double CarouselReflectionOffset
         {
-            get { return (double)GetValue(CarouselButtonReflectionOffsetProperty); }
-            set { SetValue(CarouselButtonReflectionOffsetProperty, value); }
+            get { return (double)GetValue(CarouselReflectionOffsetProperty); }
+            set { SetValue(CarouselReflectionOffsetProperty, value); }
         }
 
-        public static readonly DependencyProperty CarouselButtonReflectionOffsetProperty =
-            DependencyProperty.Register("CarouselButtonReflectionOffset",
+        public static readonly DependencyProperty CarouselReflectionOffsetProperty =
+            DependencyProperty.Register("CarouselReflectionOffset",
                 typeof(double),
                 typeof(CarouselUC),
                 new PropertyMetadata(25.0));
+
+        public double CarouselButtonCornerRadius
+        {
+            get { return (double)GetValue(CarouselButtonCornerRadiusProperty); }
+            set { SetValue(CarouselButtonCornerRadiusProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselButtonCornerRadiusProperty =
+            DependencyProperty.Register("CarouselButtonCornerRadius",
+                typeof(double),
+                typeof(CarouselUC),
+                new PropertyMetadata(5.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
+
         #endregion
 
         #region "Brush Dependency Properties"
@@ -420,7 +432,7 @@ namespace WpfApp1.UserControls
 
             // Set scale and corner radius
             CarouselProperties.SetScaleFactor(button, scale);
-            button.Tag = new CornerRadius(_defaultCornerRadius * Math.Sqrt(scale));
+            button.Tag = new CornerRadius(CarouselButtonCornerRadius * Math.Sqrt(scale));
 
             Canvas.SetLeft(button, x - button.Width / 2);
             Canvas.SetTop(button, y - (button.Height / 2));
