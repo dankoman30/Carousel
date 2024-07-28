@@ -98,42 +98,30 @@ namespace WpfApp1.UserControls
                 typeof(CarouselUC),
                 new PropertyMetadata(0.25));
 
-        public double CarouselButtonIconWidth
+        public double CarouselButtonWidth
         {
-            get { return (double)GetValue(CarouselButtonIconWidthProperty); }
-            set { SetValue(CarouselButtonIconWidthProperty, value); }
+            get { return (double)GetValue(CarouselButtonWidthProperty); }
+            set { SetValue(CarouselButtonWidthProperty, value); }
         }
 
-        public static readonly DependencyProperty CarouselButtonIconWidthProperty =
-            DependencyProperty.Register("CarouselButtonIconWidth",
+        public static readonly DependencyProperty CarouselButtonWidthProperty =
+            DependencyProperty.Register("CarouselButtonWidth",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(20.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
+                new PropertyMetadata(40.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
-        public double CarouselButtonIconHeight
+        public double CarouselButtonHeight
         {
-            get { return (double)GetValue(CarouselButtonIconHeightProperty); }
-            set { SetValue(CarouselButtonIconHeightProperty, value); }
+            get { return (double)GetValue(CarouselButtonHeightProperty); }
+            set { SetValue(CarouselButtonHeightProperty, value); }
         }
 
-        public static readonly DependencyProperty CarouselButtonIconHeightProperty =
-            DependencyProperty.Register("CarouselButtonIconHeight",
+        public static readonly DependencyProperty CarouselButtonHeightProperty =
+            DependencyProperty.Register("CarouselButtonHeight",
                 typeof(double),
                 typeof(CarouselUC),
-                new PropertyMetadata(20.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
+                new PropertyMetadata(40.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
-        public double CarouselButtonIconBorderWidth
-        {
-            get { return (double)GetValue(CarouselButtonIconBorderWidthProperty); }
-            set { SetValue(CarouselButtonIconBorderWidthProperty, value); }
-        }
-
-        public static readonly DependencyProperty CarouselButtonIconBorderWidthProperty =
-            DependencyProperty.Register("CarouselButtonIconBorderWidth",
-                typeof(double),
-                typeof(CarouselUC),
-                new PropertyMetadata(5.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
-        
 
         public double CarouselReflectionOffset
         {
@@ -317,8 +305,8 @@ namespace WpfApp1.UserControls
                     Content = new PackIconMaterial
                     {
                         Kind = carouselButton.Icon,
-                        Width = CarouselButtonIconWidth,
-                        Height = CarouselButtonIconHeight,
+                        Width = _buttonWidth * 0.5,  // Set icon size to 50% of button size
+                        Height = _buttonHeight * 0.5,
                         Background = CarouselButtonIconBackground
                     },
                     Text = carouselButton.Text,
@@ -348,11 +336,12 @@ namespace WpfApp1.UserControls
         {
             _ellipseWidth = CarouselWidth;
             _ellipseHeight = CarouselHeight;
-            _ellipseCenterX = (((_ellipseWidth / 2) + CarouselLeft) + _buttonWidth);
-            _ellipseCenterY = (((_ellipseHeight / 2) + CarouselTop) + _buttonHeight);
-            _buttonWidth = (CarouselButtonIconWidth + CarouselButtonIconBorderWidth);
-            _buttonHeight = (CarouselButtonIconHeight + CarouselButtonIconBorderWidth);
+            _ellipseCenterX = (((_ellipseWidth / 2) + CarouselLeft) + CarouselButtonWidth / 2);
+            _ellipseCenterY = (((_ellipseHeight / 2) + CarouselTop) + CarouselButtonHeight / 2);
+            _buttonWidth = CarouselButtonWidth;
+            _buttonHeight = CarouselButtonHeight;
         }
+
         private void RotateCarousel(double rotationAngle)
         {
             for (int i = 0; i < buttons.Length; i++)
