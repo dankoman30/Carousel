@@ -1,12 +1,11 @@
 ﻿using MahApps.Metro.IconPacks;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace WpfApp1.Models
 {
-    public class CarouselButton
+    public class CarouselButton : Button
     {
         public PackIconMaterialKind Icon { get; set; } = PackIconMaterialKind.None;
-        public ICommand? Command { get; set; } = null;
         public string? Text { get; set; } = string.Empty;
     }
 }

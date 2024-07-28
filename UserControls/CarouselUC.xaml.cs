@@ -17,7 +17,7 @@ namespace WpfApp1.UserControls
         private double _buttonWidth;
         private double _buttonHeight;
 
-        private Button[] buttons;
+        private CarouselButton[] buttons;
         private double[] angles;
 
         #region "Observable Collections Dependency Properties"
@@ -303,13 +303,13 @@ namespace WpfApp1.UserControls
             SetButtonPositions();
 
             int numberOfButtons = CarouselButtons.Count;
-            buttons = new Button[numberOfButtons];
+            buttons = new CarouselButton[numberOfButtons];
             angles = new double[numberOfButtons];
 
             for (int i = 0; i < numberOfButtons; i++)
             {
                 var carouselButton = CarouselButtons[i];
-                buttons[i] = new Button
+                buttons[i] = new CarouselButton
                 {
                     Width = _buttonWidth,
                     Height = _buttonHeight,
@@ -321,6 +321,7 @@ namespace WpfApp1.UserControls
                         Height = CarouselButtonIconHeight,
                         Background = CarouselButtonIconBackground
                     },
+                    Text = carouselButton.Text,
                     Tag = carouselButton
                 };
 
@@ -362,7 +363,7 @@ namespace WpfApp1.UserControls
                 angles[i] = newAngle;
             }
         }
-        private void AnimateButtonToNewPosition(Button button, double fromAngle, double toAngle)
+        private void AnimateButtonToNewPosition(CarouselButton button, double fromAngle, double toAngle)
         {
             double durationSeconds = 0.5;
             int steps = 35;
@@ -408,7 +409,7 @@ namespace WpfApp1.UserControls
             };
         }
 
-        private void PositionButton(Button? button, double angle)
+        private void PositionButton(CarouselButton? button, double angle)
         {
             if (button == null)
                 return;
@@ -416,7 +417,7 @@ namespace WpfApp1.UserControls
             UpdateButton(button, angle);
         }
 
-        private void UpdateButton(Button button, double currentAngle)
+        private void UpdateButton(CarouselButton button, double currentAngle)
         {
             double radiusX = _ellipseWidth / 2;
             double radiusY = _ellipseHeight / 2;
@@ -455,7 +456,7 @@ namespace WpfApp1.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button? clickedButton = sender as Button;
+            CarouselButton? clickedButton = sender as CarouselButton;
             if (clickedButton == null) return;
 
             int clickedIndex = Array.IndexOf(buttons, clickedButton);

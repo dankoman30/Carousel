@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:materialDesign="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:uc="clr-namespace:WpfApp1.UserControls"
-                    xmlns:local="clr-namespace:WpfApp1">
+                    xmlns:local="clr-namespace:WpfApp1"
+                    xmlns:models="clr-namespace:WpfApp1.Models">
     
     <!-- Register the converter -->
     <local:MultiplyConverter x:Key="DoubleHeightConverter" Factor="2"/>
@@ -70,7 +71,7 @@
                         <!-- Text Content -->
                         <TextBlock 
                             Grid.Row="1"
-                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                            Text="{Binding RelativeSource={RelativeSource AncestorType=models:CarouselButton}, Path=Text}"
                             HorizontalAlignment="Center"
                             Margin="-40,5,0,0"
                             Foreground="{Binding RelativeSource={RelativeSource AncestorType=uc:CarouselUC}, Path=CarouselButtonTextForeground}">
