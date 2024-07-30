@@ -28,6 +28,7 @@
             CarouselReflectionGradientStart="Black"
             CarouselReflectionGradientEnd="Transparent"
             CarouselReflectionOpacity=".25"
-            CarouselButtonTextForeground="White"/>
+            CarouselButtonTextForeground="White"
+            CarouselTextOffset="20"/>
     </Grid>
 </Window>
