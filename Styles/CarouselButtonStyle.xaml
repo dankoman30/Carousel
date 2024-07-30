@@ -46,6 +46,11 @@
                                     </Style>
                                 </ContentPresenter.Resources>
                             </ContentPresenter>
+                            <Border.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=models:CarouselButton}, Path=Text}"/>
+                                </ToolTip>
+                            </Border.ToolTip>
                         </Border>
 
                         <!-- Reflection Effect -->

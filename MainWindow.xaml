@@ -12,7 +12,7 @@
         <uc:CarouselUC
             CarouselButtons="{Binding CarouselViewModel.CarouselButtons}"
             CarouselWidth="500" 
-            CarouselHeight="80"
+            CarouselHeight="150"
             CarouselTop="20"
             CarouselLeft="20"
             CarouselButtonCornerRadius="5"
