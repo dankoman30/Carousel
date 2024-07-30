@@ -147,6 +147,18 @@ namespace WpfApp1.UserControls
                 typeof(CarouselUC),
                 new PropertyMetadata(5.0, new PropertyChangedCallback(OnCarouselSizeChanged)));
 
+        public double CarouselTextOffset
+        {
+            get { return (double)GetValue(CarouselTextOffsetProperty); }
+            set { SetValue(CarouselTextOffsetProperty, value); }
+        }
+
+        public static readonly DependencyProperty CarouselTextOffsetProperty =
+            DependencyProperty.Register("CarouselTextOffset",
+                typeof(double),
+                typeof(CarouselUC),
+                new PropertyMetadata(20.0));
+
         #endregion
 
         #region "Brush Dependency Properties"
@@ -425,6 +437,7 @@ namespace WpfApp1.UserControls
 
             // Set scale and corner radius
             CarouselProperties.SetScaleFactor(button, scale);
+            CarouselProperties.SetAngle(button, currentAngle);
             button.Tag = new CornerRadius(CarouselButtonCornerRadius * Math.Sqrt(scale));
 
             Canvas.SetLeft(button, x - button.Width / 2);
@@ -456,6 +469,13 @@ namespace WpfApp1.UserControls
             // Calculate Z-index: highest (1000) at bottom (90 degrees), lowest (0) at top (270 degrees)
             return 1000 - (int)Math.Round(Math.Abs(angle - 90) * (1000.0 / 180));
         }
+
+        public double GetButtonAngle(CarouselButton button)
+        {
+            int index = Array.IndexOf(buttons, button);
+            return index >= 0 ? angles[index] : 0;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CarouselButton? clickedButton = sender as CarouselButton;

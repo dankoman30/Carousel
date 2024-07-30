@@ -16,5 +16,21 @@ namespace WpfApp1
         {
             return (double)element.GetValue(ScaleFactorProperty);
         }
+
+
+
+
+        public static readonly DependencyProperty AngleProperty =
+        DependencyProperty.RegisterAttached("Angle", typeof(double), typeof(CarouselProperties), new PropertyMetadata(0.0));
+
+        public static void SetAngle(DependencyObject element, double value)
+        {
+            element.SetValue(AngleProperty, value);
+        }
+
+        public static double GetAngle(DependencyObject element)
+        {
+            return (double)element.GetValue(AngleProperty);
+        }
     }
 }

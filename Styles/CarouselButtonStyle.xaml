@@ -3,10 +3,12 @@
                     xmlns:materialDesign="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:uc="clr-namespace:WpfApp1.UserControls"
                     xmlns:local="clr-namespace:WpfApp1"
+                    xmlns:converters="clr-namespace:WpfApp1.Converters"
                     xmlns:models="clr-namespace:WpfApp1.Models">
     
     <!-- Register the converter -->
-    <local:MultiplyConverter x:Key="DoubleHeightConverter" Factor="2"/>
+    <converters:MultiplyConverter x:Key="DoubleHeightConverter" Factor="2"/>
+    <converters:MarginLeftConverter x:Key="MarginLeftConverter"/>
 
     <!-- CarouselButtonStyle -->
     <Style x:Key="CarouselButtonStyle" TargetType="Button">
@@ -24,6 +26,7 @@
                         <!-- Button Content -->
                         <Border x:Name="border"
                             Grid.Row="0"
+                            Grid.Column="1"
                             CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
                             Background="{Binding ElementName=Carousel, Path=CarouselButtonBackground}"
                             BorderBrush="{Binding ElementName=Carousel, Path= CarouselButtonBorderBrush}"
@@ -71,21 +74,27 @@
                         </Border>
 
                         <!-- Text Content -->
-                        <TextBlock 
-                            Grid.Row="1"
+                        <Viewbox  Grid.Row="1">
+                        <TextBlock
                             Text="{Binding RelativeSource={RelativeSource AncestorType=models:CarouselButton}, Path=Text}"
                             HorizontalAlignment="Center"
-                            Margin="-5 10 0 0"
                             Foreground="{Binding RelativeSource={RelativeSource AncestorType=uc:CarouselUC}, Path=CarouselButtonTextForeground}">
-                            <TextBlock.RenderTransform>
+                                <TextBlock.Margin>
+                                    <MultiBinding Converter="{StaticResource MarginLeftConverter}">
+                                        <Binding Path="(local:CarouselProperties.Angle)" RelativeSource="{RelativeSource AncestorType=Button}"/>
+                                        <Binding Path="CarouselHeight" RelativeSource="{RelativeSource AncestorType=uc:CarouselUC}"/>
+                                        <Binding Path="CarouselTextOffset" RelativeSource="{RelativeSource AncestorType=uc:CarouselUC}"/>
+                                    </MultiBinding>
+                                </TextBlock.Margin>
+                                <TextBlock.RenderTransform>
                                 <ScaleTransform 
                                     x:Name="textScale"
                                     ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"
                                     ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:CarouselProperties.ScaleFactor)}"/>
                             </TextBlock.RenderTransform>
                         </TextBlock>
-                    
-                        </Grid>
+                        </Viewbox>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{Binding ElementName=Carousel, Path=CarouselButtonMouseOverBackground}"/>

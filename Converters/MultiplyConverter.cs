@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace WpfApp1
+namespace WpfApp1.Converters
 {
     public class MultiplyConverter : IValueConverter
     {
